@@ -257,15 +257,15 @@ to_eigen_layout(Layout l) -> int
 constexpr auto
 from_eigen_layout(int l) -> Layout
 {
-  return (unsigned(l) & Eigen::RowMajorBit) == Eigen::RowMajor ? rowmajor
+  return (unsigned(l) & Eigen::RowMajorBit) == unsigned(Eigen::RowMajor) ? rowmajor
                                                                : colmajor;
 }
 
 static_assert(to_eigen_layout(from_eigen_layout(Eigen::ColMajor)) ==
-                Eigen::ColMajor,
+                static_cast<int>(Eigen::ColMajor),
               ".");
 static_assert(to_eigen_layout(from_eigen_layout(Eigen::RowMajor)) ==
-                Eigen::RowMajor,
+                static_cast<int>(Eigen::RowMajor),
               ".");
 
 namespace detail {
